@@ -26,15 +26,17 @@ new-mungchi/
 │   └── images/                   # 이미지 에셋
 ├── design/                       # 디자인 에셋
 │   └── logo/                     # 로고 파일
+├── docs/                         # 프로젝트 문서
+│   ├── PRD.md                    # 제품 요구사항 정의서
+│   ├── ARCHITECTURE.md           # 이 파일
+│   ├── SETUP_GUIDE.md            # 환경 설정 가이드
+│   └── GEMINI_ONBOARDING.md      # Gemini 개발자 온보딩 가이드
 ├── .env.example                  # 환경 변수 템플릿
 ├── components.json               # shadcn/ui 설정
 ├── tailwind.config.ts            # Tailwind 설정
 ├── tsconfig.json                 # TypeScript 설정
 ├── next.config.ts                # Next.js 설정
-├── package.json                  # 의존성 관리
-├── PRD.md                        # 제품 요구사항 정의서
-├── GEMINI_ONBOARDING.md          # Gemini 개발자 온보딩 가이드
-└── ARCHITECTURE.md               # 이 파일
+└── package.json                  # 의존성 관리
 ```
 
 ---
@@ -200,8 +202,9 @@ xl: 1280px
 
 ## 🔗 참고 문서
 
-- [PRD.md](PRD.md) - 제품 요구사항 정의서
-- [GEMINI_ONBOARDING.md](GEMINI_ONBOARDING.md) - Gemini 개발자 가이드
+- [PRD.md](./PRD.md) - 제품 요구사항 정의서
+- [SETUP_GUIDE.md](./SETUP_GUIDE.md) - 환경 설정 가이드
+- [GEMINI_ONBOARDING.md](./GEMINI_ONBOARDING.md) - Gemini 개발자 가이드
 - [Next.js App Router 문서](https://nextjs.org/docs/app)
 - [shadcn/ui 문서](https://ui.shadcn.com)
 - [Tailwind CSS 문서](https://tailwindcss.com)

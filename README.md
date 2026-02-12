@@ -53,10 +53,19 @@ npm run dev
 
 ## 📁 주요 문서
 
-- [PRD.md](PRD.md) - 제품 요구사항 정의서
-- [ARCHITECTURE.md](ARCHITECTURE.md) - 프로젝트 아키텍처
-- [SETUP_GUIDE.md](SETUP_GUIDE.md) - 환경 설정 가이드 (Supabase, Kakao Maps, GA4)
-- [GEMINI_ONBOARDING.md](GEMINI_ONBOARDING.md) - Gemini 개발자 온보딩 가이드
+### 프로젝트 문서
+- [PRD.md](docs/PRD.md) - 제품 요구사항 정의서
+- [ARCHITECTURE.md](docs/ARCHITECTURE.md) - 프로젝트 아키텍처
+- [SETUP_GUIDE.md](docs/SETUP_GUIDE.md) - 환경 설정 가이드 (Supabase, Kakao Maps, GA4)
+
+### 팀 온보딩
+- [CLAUDE_PM_GUIDE.md](docs/CLAUDE_PM_GUIDE.md) - Claude PM 가이드 (PM 역할 수행)
+- [GEMINI_ONBOARDING.md](docs/GEMINI_ONBOARDING.md) - Gemini 개발자 온보딩
+- [REVIEW_AGENT_GUIDE.md](docs/REVIEW_AGENT_GUIDE.md) - 코드 검토 Agent 가이드
+
+### Epic & Task
+- [EPIC_02_TASK_BREAKDOWN.md](docs/EPIC_02_TASK_BREAKDOWN.md) - Epic 2 Task 분해
+- [DEV_SPEC_001_RESTAURANT_LIST.md](docs/specs/DEV_SPEC_001_RESTAURANT_LIST.md) - 첫 번째 개발 명세서
 
 ---
 

@@ -1,29 +1,23 @@
+export type Category = '전체' | '한식' | '양식' | '카페' | '기타';
+
 export interface Restaurant {
-  id: number;
+  id: string;
   name: string;
-  image: string;
+  category: Category;
+  description: string;
   address: string;
-  category: string;
-  businessHours: string;
-  hasGroupEventExpr: boolean; // 단체/간식행사 경험 유무
-  specialNotes: string;
+  imageUrl: string;
+  phone: string;
+  hours: string;
+  hasGroupOrderExperience: boolean;
+  comment: string;
   tags: string[];
-  phoneNumber: string;
-  naverMapUrl: string;
-  kakaoMapUrl?: string;
-  latitude?: number;
-  longitude?: number;
-  createdAt?: string;
-  updatedAt?: string;
+  naverPlaceUrl: string;
+  lat: number;
+  lng: number;
+  distance?: number;
 }
 
 export interface RestaurantFilters {
   category?: string;
-  tags?: string[];
-  searchQuery?: string;
-  userLocation?: {
-    latitude: number;
-    longitude: number;
-  };
-  maxDistance?: number; // km 단위
 }
