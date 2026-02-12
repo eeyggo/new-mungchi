@@ -80,11 +80,12 @@
 - 사용자가 명세서를 Gemini에게 전달
 - Gemini가 개발 시작 → 완료 보고
 
-### Phase 5: 코드 리뷰
+### Phase 5: 코드 리뷰 (Review Agent 활용)
 1. Gemini가 "✅ Task #XXX 개발 완료" 보고
-2. 생성/수정된 파일 확인
-3. 코드 리뷰 체크리스트 검토 (아래 참고)
-4. 피드백 또는 승인
+2. **Review Agent 호출** - Task 툴로 자동 검토 실행
+3. Review Agent 보고서 확인
+4. 통과 시 → 승인 / 수정 필요 시 → Gemini에게 피드백 전달
+5. 필요 시 수동 체크리스트로 추가 확인 (아래 참고)
 
 ### Phase 6: 다음 Task 진행
 - 다음 Task 명세서 작성
@@ -200,41 +201,69 @@ DEV_SPEC_[번호]_[TASK_TITLE].md
 
 ---
 
-## 🔍 코드 리뷰 체크리스트
+## 🔍 코드 리뷰: Review Agent 활용
 
-Gemini가 완료 보고하면 다음을 확인:
+### ✅ 권장 프로세스 (자동화)
 
-### 1. 파일 생성/수정 확인
-```bash
-# 명세서에 명시된 파일들이 실제로 생성/수정되었는지 확인
-Read 툴로 파일 읽기
+Gemini가 완료 보고하면 **Review Agent를 먼저 호출**하세요:
+
+#### 1. Review Agent 호출
+```
+Task 툴 사용
+subagent_type: "general-purpose"
+prompt: "다음 명세서와 Gemini 개발 내용을 종합 검토해주세요:
+
+- 명세서: docs/specs/DEV_SPEC_XXX_[TITLE].md
+- 생성/수정된 파일: [Gemini 보고서에서 복사]
+- 검토 가이드: docs/REVIEW_AGENT_GUIDE.md
+
+6개 카테고리(개발 안정성, 보안, UI/UX, 명세서 일치성, 코드 품질, 성능)를 검토하고 보고서를 작성해주세요."
 ```
 
-### 2. TypeScript 타입 체크
+#### 2. Review Agent 보고서 확인
+- ✅ 통과 시 → 다음 Task 진행
+- ⚠️ 수정 필요 시 → Gemini에게 구체적인 피드백 전달
+
+#### 3. Review Agent 장점
+- ✅ 일관된 코드 품질 유지
+- ✅ 보안/성능 이슈 조기 발견
+- ✅ PM의 수동 리뷰 부담 감소
+- ✅ Gemini에게 구체적인 피드백 (파일:라인, 문제, 해결 방법)
+
+---
+
+### 📋 수동 체크리스트 (필요 시)
+
+Review Agent 보고서 외에 추가 확인이 필요할 때 사용:
+
+#### 1. 파일 생성/수정 확인
+- Read 툴로 명세서에 명시된 파일들이 실제로 생성/수정되었는지 확인
+
+#### 2. TypeScript 타입 체크
 - [ ] Props에 타입 정의되어 있음
 - [ ] `any` 사용하지 않음
 - [ ] Interface/Type 올바르게 사용
 
-### 3. 디자인 시스템 준수
+#### 3. 디자인 시스템 준수
 - [ ] shadcn/ui 컴포넌트 사용
 - [ ] Tailwind 유틸리티 클래스만 사용 (인라인 스타일 없음)
 - [ ] 브랜드 컬러 시스템 적용 (`text-primary`, `bg-primary` 등)
 
-### 4. 반응형 디자인
+#### 4. 반응형 디자인
 - [ ] Mobile First 적용
 - [ ] md: breakpoint 적절히 사용
 - [ ] max-width 제한 (필요 시)
 
-### 5. 코드 품질
+#### 5. 코드 품질
 - [ ] 컴포넌트명 명확함 (PascalCase)
 - [ ] 파일명 규칙 준수 (kebab-case)
 - [ ] 불필요한 console.log 없음
 - [ ] 주석 과도하지 않음 (복잡한 로직만)
 
-### 6. Definition of Done 확인
+#### 6. Definition of Done 확인
 - [ ] 명세서의 DoD 체크리스트 모두 완료됨
 
-### 7. 빌드 테스트
+#### 7. 빌드 테스트
 ```bash
 npm run build
 ```
@@ -299,10 +328,11 @@ README.md의 "📦 주요 기능 (MVP)" 섹션을 지속적으로 업데이트:
 1. **[PRD.md](./PRD.md)**: 제품 요구사항 - 기능, 데이터 스키마 확인
 2. **[ARCHITECTURE.md](./ARCHITECTURE.md)**: 프로젝트 구조, 기술 스택
 3. **[GEMINI_ONBOARDING.md](./GEMINI_ONBOARDING.md)**: Gemini 개발자 가이드
+4. **[REVIEW_AGENT_GUIDE.md](./REVIEW_AGENT_GUIDE.md)**: 코드 검토 Agent 가이드
 
 ### Epic/Task 문서
-- **Epic 분해**: `EPIC_XX_TASK_BREAKDOWN.md`
-- **개발 명세서**: `DEV_SPEC_XXX_[TITLE].md`
+- **Epic 분해**: `EPIC_XX_TASK_BREAKDOWN.md` (docs/ 폴더)
+- **개발 명세서**: `specs/DEV_SPEC_XXX_[TITLE].md` (docs/specs/ 폴더)
 
 ### 설정 가이드
 - **[SETUP_GUIDE.md](./SETUP_GUIDE.md)**: Supabase, Kakao Maps, GA4 설정
@@ -363,7 +393,7 @@ ls -R app/ components/ lib/
 - [ ] #004: 라우팅 연결
 - [ ] #005: 로딩/에러 처리 (선택)
 
-**현재 명세서**: [DEV_SPEC_001_RESTAURANT_LIST.md](./DEV_SPEC_001_RESTAURANT_LIST.md) (Task #001-003 통합)
+**현재 명세서**: [DEV_SPEC_001_RESTAURANT_LIST.md](./specs/DEV_SPEC_001_RESTAURANT_LIST.md) (Task #001-003 통합)
 
 **다음 단계**:
 1. 사용자가 Gemini에게 명세서 전달
