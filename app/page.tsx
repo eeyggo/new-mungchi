@@ -1,5 +1,5 @@
 'use client';
-
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { mockRestaurants } from "@/lib/data/mock-restaurants";
 import { RestaurantCard } from "@/components/restaurant-card";
@@ -57,8 +57,10 @@ export default function Home() {
       .sort((a, b) => (a.distance || 0) - (b.distance || 0));
   }
 
+  const router = useRouter();
+
   const handleSelectRestaurant = (id: string) => {
-    // TODO: Epic 3에서 상세 페이지 라우팅 구현
+    router.push(`/restaurant/${id}`);
   };
 
   return (
