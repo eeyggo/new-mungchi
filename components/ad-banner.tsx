@@ -1,11 +1,3 @@
-/*
-  Design: Retro Modernism Ad Banner
-  - Warm cream/pastel background
-  - Rounded panel with soft shadow
-  - Brand color accents
-  - Playful ticker animation
-*/
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -32,22 +24,27 @@ const SEPARATOR = '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\
 const STORAGE_KEY = 'ad-banner-shown';
 
 function pickRandom(count: number) {
+    // localStorage에서 이미 나왔던 인덱스 가져오기
     let shown: number[] = [];
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) shown = JSON.parse(stored);
     } catch {}
 
+    // 아직 안 나온 문구들
     let remaining = AD_MESSAGES.map((_, i) => i).filter((i) => !shown.includes(i));
 
+    // 남은 게 부족하면 리셋
     if (remaining.length < count) {
         shown = [];
         remaining = AD_MESSAGES.map((_, i) => i);
     }
 
+    // 셔플 후 count개 뽑기
     const shuffled = remaining.sort(() => Math.random() - 0.5);
     const picked = shuffled.slice(0, count);
 
+    // 사용한 인덱스 저장
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify([...shown, ...picked]));
     } catch {}
@@ -87,25 +84,23 @@ export function AdBanner() {
                     100% { transform: translateX(-50%); }
                 }
                 .animate-ticker {
-                    animation: ticker 18s linear infinite;
+                    animation: ticker 15s linear infinite;
                 }
             `}</style>
 
-            {/* Mobile Ad Banner - Retro Style */}
-            <div className="fixed bottom-0 left-0 right-0 border-t border-border md:hidden z-10 bg-card/95 backdrop-blur-md shadow-retro-lg">
-                <div className="h-16 flex flex-col justify-center px-4">
-                    <TickerTape messages={messages} className="text-sm font-semibold text-foreground" />
-                    <p className="text-[10px] text-brand mt-0.5 text-center font-medium">광고 환영합니다 ✨</p>
+            {/* Mobile Ad Banner */}
+            <div className="fixed bottom-0 left-0 right-0 border-t md:hidden z-10 bg-gray-100">
+                <div className="h-16 flex flex-col justify-center">
+                    <TickerTape messages={messages} className="text-sm font-semibold text-gray-700" />
+                    <p className="text-[10px] text-gray-400 mt-0.5 text-center">광고 환영합니다</p>
                 </div>
             </div>
 
-            {/* Desktop Ad Banner - Panel Style */}
-            <div className="hidden md:block max-w-7xl mx-auto px-6 lg:px-8 pb-8 mt-8">
-                <div className="panel bg-gradient-to-r from-accent/40 via-background-alt to-accent/40 border-border/50">
-                    <div className="h-20 flex flex-col justify-center">
-                        <TickerTape messages={messages} className="text-lg font-semibold text-foreground" />
-                        <p className="text-xs text-brand mt-2 text-center font-medium">광고 환영합니다 ✨</p>
-                    </div>
+            {/* Desktop Ad Banner */}
+            <div className="hidden md:block max-w-7xl mx-auto px-6 lg:px-8 pb-8 mt-6">
+                <div className="h-24 rounded-lg flex flex-col justify-center bg-gray-100">
+                    <TickerTape messages={messages} className="text-lg font-semibold text-gray-700" />
+                    <p className="text-xs text-gray-400 mt-1 text-center">광고 환영합니다</p>
                 </div>
             </div>
         </>

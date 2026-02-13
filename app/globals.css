@@ -1,63 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Pretendard:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/*
-  Design Philosophy: Retro Modernism for Mungchi
-  - Warm pastel/cream background with #4D77FF as the hero color
-  - Generous spacing, rounded corners (20-28px), panel-based sections
-  - Editorial e-commerce layout with soft shadows
-  - Key color #4D77FF dominates all CTAs, links, and active states
-*/
-
 @layer base {
   :root {
-    /* Primary - Mungchi Brand Blue #4D77FF (키컬러 - 모든 CTA/링크/활성상태) */
-    --primary: 221 100% 65%; /* #4D77FF */
-    --primary-hover: 221 100% 60%; /* #3B63F5 */
-    --primary-soft: 221 100% 65% / 0.12; /* rgba(77,119,255,0.12) for badges/chips */
+    /* Primary - Mungchi Blue (#4D77FF) */
+    --primary: 221 100% 65%;
     --primary-foreground: 0 0% 100%;
 
-    /* Background - Warm Cream/Ivory (따뜻한 크림/아이보리) */
-    --background: 39 100% 96%; /* #FFF6E8 */
-    --background-alt: 39 71% 95%; /* #FAF1E3 */
-    --foreground: 25 20% 20%; /* Deep Brown for text */
+    /* Background */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-    /* Surface - Card (화이트 또는 아주 옅은 아이보리) */
+    /* Muted */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Card */
     --card: 0 0% 100%;
-    --card-foreground: 25 20% 20%;
+    --card-foreground: 222.2 84% 4.9%;
 
-    /* Border - Warm Beige (따뜻한 베이지 보더) */
-    --border: 30 30% 88%; /* #E8D7C7 */
-    --input: 30 30% 88%;
+    /* Border */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
 
-    /* Muted - Neutral Support */
-    --muted: 39 40% 92%;
-    --muted-foreground: 25 10% 50%;
-
-    /* Accent - Very Subtle (보조 포인트, 키컬러와 경쟁하지 않음) */
-    --accent: 39 60% 94%;
-    --accent-foreground: 25 20% 20%;
+    /* Accent */
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     /* Destructive */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    /* Ring - Matches Primary */
+    /* Ring */
     --ring: 221 100% 65%;
 
-    /* Radius - Generous rounded corners */
-    --radius: 1.25rem; /* 20px */
-    --radius-lg: 1.75rem; /* 28px */
-    --radius-md: 1rem; /* 16px */
-    --radius-sm: 0.75rem; /* 12px */
-
-    /* Shadows - Soft and subtle */
-    --shadow-soft: 0 2px 8px rgba(77, 119, 255, 0.08);
-    --shadow-medium: 0 4px 16px rgba(77, 119, 255, 0.12);
-    --shadow-strong: 0 8px 24px rgba(77, 119, 255, 0.16);
+    /* Radius */
+    --radius: 0.5rem;
   }
 }
 
@@ -65,85 +44,8 @@
   * {
     @apply border-border;
   }
-  
   body {
     @apply bg-background text-foreground;
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  }
-
-  /* Typography System */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
-  }
-
-  h1 {
-    @apply text-4xl md:text-5xl;
-    line-height: 1.2;
-  }
-
-  h2 {
-    @apply text-2xl md:text-3xl;
-    line-height: 1.3;
-  }
-
-  h3 {
-    @apply text-xl md:text-2xl;
-    line-height: 1.4;
-  }
-
-  p {
-    line-height: 1.6;
-  }
-}
-
-@layer components {
-  /* Retro shadow utilities */
-  .shadow-retro {
-    box-shadow: var(--shadow-soft);
-  }
-
-  .shadow-retro-md {
-    box-shadow: var(--shadow-medium);
-  }
-
-  .shadow-retro-lg {
-    box-shadow: var(--shadow-strong);
-  }
-
-  /* Primary color utilities for key elements */
-  .text-brand {
-    color: hsl(var(--primary));
-  }
-
-  .bg-brand {
-    background-color: hsl(var(--primary));
-  }
-
-  .bg-brand-soft {
-    background-color: hsla(var(--primary-soft));
-  }
-
-  .border-brand {
-    border-color: hsl(var(--primary));
-  }
-
-  /* Pill-shaped elements (filters, badges, tabs) */
-  .pill {
-    @apply rounded-full px-4 py-2 font-medium transition-all duration-300;
-  }
-
-  .pill-sm {
-    @apply rounded-full px-3 py-1.5 text-sm font-medium transition-all duration-300;
-  }
-
-  /* Panel-based sections */
-  .panel {
-    @apply bg-card rounded-[var(--radius-lg)] p-6 md:p-8 shadow-retro border border-border;
-  }
-
-  .panel-soft {
-    @apply bg-accent/50 rounded-[var(--radius-lg)] p-6 md:p-8 border border-border/50;
   }
 }
 
@@ -154,18 +56,5 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
-  }
-
-  /* Hover lift effect for cards */
-  .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-retro-md;
-  }
-
-  /* Text gradient for special headings */
-  .text-gradient-brand {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(221 100% 75%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 }
