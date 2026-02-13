@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { ChevronLeft, MapPin, ExternalLink, CheckCircle2, Phone } from 'lucide-react';
+import { RestaurantImage } from '@/components/restaurant-image';
 import { useRouter } from 'next/navigation';
 import { Restaurant } from '@/lib/types/restaurant';
 
@@ -20,7 +20,7 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
         <div className="md:max-w-4xl md:mx-auto md:my-6 md:bg-white md:rounded-xl md:overflow-hidden md:shadow-lg">
             {/* Header Image */}
             <div className="relative h-64 md:h-96 bg-gray-100">
-                <Image
+                <RestaurantImage
                     src={restaurant.imageUrl}
                     alt={restaurant.name}
                     fill
@@ -42,7 +42,7 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
                     {restaurant.hasGroupOrderExperience && (
                         <div className="px-3 py-1.5 bg-green-500 text-white rounded-full text-sm font-medium shadow-md flex items-center gap-1">
                             <CheckCircle2 className="size-3.5" />
-                            단체주문 가능
+                            단체/간식행사 경험
                         </div>
                     )}
                     <div className="px-3 py-1.5 bg-white rounded-full text-sm font-medium shadow-md">
@@ -55,22 +55,17 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
             <div className="p-5 md:p-8">
                 {/* Basic Info */}
                 <div className="pb-5 md:pb-6 border-b">
-                    <div className="flex flex-wrap items-center gap-2 mb-3 md:mb-4">
-                        <h1 className="text-xl md:text-2xl font-bold">{restaurant.name}</h1>
-                        {restaurant.tags?.map(tag => (
-                            <span
-                                key={tag}
-                                className="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full text-xs"
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-
-                    <div className="flex items-start gap-2 mb-2 md:mb-3">
-                        <MapPin className="size-4 text-gray-500 flex-shrink-0 mt-0.5" />
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm text-gray-700">{restaurant.address}</p>
+                    <div className="flex items-center gap-2 mb-3 md:mb-4">
+                        <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+                            <h1 className="text-xl md:text-2xl font-bold">{restaurant.name}</h1>
+                            {restaurant.tags?.map(tag => (
+                                <span
+                                    key={tag}
+                                    className="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full text-xs"
+                                >
+                                    {tag}
+                                </span>
+                            ))}
                         </div>
                         <a
                             href={restaurant.naverPlaceUrl}
@@ -81,6 +76,13 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
                             네이버
                             <ExternalLink className="size-3 md:size-4" />
                         </a>
+                    </div>
+
+                    <div className="flex items-start gap-2 mb-2 md:mb-3">
+                        <MapPin className="size-4 text-gray-500 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                            <p className="text-sm text-gray-700">{restaurant.address}</p>
+                        </div>
                     </div>
 
                     <div className="mt-3 md:mt-4 space-y-1.5 md:space-y-2">

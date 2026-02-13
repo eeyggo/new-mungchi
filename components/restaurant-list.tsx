@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { RestaurantCard } from '@/components/restaurant-card';
 import { RestaurantListHeader } from '@/components/restaurant-list-header';
 import { FilterDrawer } from '@/components/filter-drawer';
@@ -22,56 +22,55 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const handleLocationToggle = (enabled: boolean, location?: { lat: number; lng: number }) => {
+  const handleLocationToggle = useCallback((enabled: boolean, location?: { lat: number; lng: number }) => {
     setLocationEnabled(enabled);
     if (enabled && location) {
       setUserLocation(location);
     } else {
       setUserLocation(null);
     }
-  };
+  }, []);
 
-  // 활성 필터 개수 계산
   const activeFilterCount =
     (selectedCategory !== '전체' ? 1 : 0) +
     selectedTags.length +
     (locationEnabled ? 1 : 0);
 
-  // 필터링 로직
-  let filteredRestaurants = restaurants;
+  const filteredRestaurants = useMemo(() => {
+    let result = restaurants;
 
-  // 1. 카테고리 필터
-  if (selectedCategory !== '전체') {
-    filteredRestaurants = filteredRestaurants.filter(r => r.category === selectedCategory);
-  }
+    if (selectedCategory !== '전체') {
+      result = result.filter(r => r.category === selectedCategory);
+    }
 
-  // 2. 태그 필터 (AND)
-  if (selectedTags.length > 0) {
-    filteredRestaurants = filteredRestaurants.filter(restaurant =>
-      selectedTags.every(tag => restaurant.tags?.includes(tag))
-    );
-  }
+    if (selectedTags.length > 0) {
+      result = result.filter(restaurant =>
+        selectedTags.every(tag => restaurant.tags?.includes(tag))
+      );
+    }
 
-  // 3. 위치 기반 정렬
-  if (locationEnabled && userLocation) {
-    filteredRestaurants = filteredRestaurants
-      .map(restaurant => ({
-        ...restaurant,
-        distance: calculateDistance(
-          userLocation.lat,
-          userLocation.lng,
-          restaurant.lat,
-          restaurant.lng
-        ),
-      }))
-      .sort((a, b) => (a.distance || 0) - (b.distance || 0));
-  }
+    if (locationEnabled && userLocation) {
+      result = result
+        .map(restaurant => ({
+          ...restaurant,
+          distance: calculateDistance(
+            userLocation.lat,
+            userLocation.lng,
+            restaurant.lat,
+            restaurant.lng
+          ),
+        }))
+        .sort((a, b) => (a.distance || 0) - (b.distance || 0));
+    }
+
+    return result;
+  }, [restaurants, selectedCategory, selectedTags, locationEnabled, userLocation]);
 
   const router = useRouter();
 
-  const handleSelectRestaurant = (id: string) => {
+  const handleSelectRestaurant = useCallback((id: string) => {
     router.push(`/restaurant/${id}`);
-  };
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-gray-50 pb-24 md:pb-0">
@@ -88,7 +87,7 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
         onLocationToggle={handleLocationToggle}
       />
 
-      <main className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
+      <main className="max-w-7xl mx-auto px-4 pb-4 pt-2 md:px-6 md:pb-6 md:pt-3 lg:px-8 lg:pb-8 lg:pt-4">
         <div className="mb-4">
           <CategoryChips
             selectedCategory={selectedCategory}

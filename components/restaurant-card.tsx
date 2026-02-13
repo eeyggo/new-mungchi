@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Restaurant } from "@/lib/types/restaurant";
+import { RestaurantImage } from "@/components/restaurant-image";
 import { CheckCircle2, MapPin } from 'lucide-react';
 import { formatDistance } from "@/lib/utils/location";
 
@@ -15,7 +15,7 @@ export function RestaurantCard({ restaurant, onSelectRestaurant }: RestaurantCar
             className="group block w-full bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
         >
             <div className="relative aspect-[4/3] w-full bg-gray-100 overflow-hidden">
-                <Image
+                <RestaurantImage
                     src={restaurant.imageUrl}
                     alt={restaurant.name}
                     fill

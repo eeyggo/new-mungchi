@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Check, MapPin, Loader2, RotateCcw } from "lucide-react"
+import { Check, MapPin, Loader2, RotateCcw, AlertCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -17,6 +17,7 @@ import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Category, CATEGORIES } from "@/lib/types/restaurant"
+import { ALL_TAGS } from "@/lib/constants/tags"
 
 interface FilterDrawerProps {
     open: boolean
@@ -29,19 +30,6 @@ interface FilterDrawerProps {
     onLocationToggle: (enabled: boolean, userLocation?: { lat: number; lng: number }) => void
 }
 
-const ALL_TAGS = [
-    '#가성비', '#단체석', '#뒷풀이',
-    '#간식행사', '#떡볶이', '#단체주문',
-    '#점심', '#혼밥',
-    '#이색맛집', '#커리', '#룸완비',
-    '#치맥', '#전통',
-    '#단체도시락', '#행사', '#배달',
-    '#피자', '#뷔페', '#런치세트',
-    '#꿔바로우', '#중식맛집', '#데이트',
-    '#단체커피', '#회의', '#노트북',
-    '#야식', '#술안주'
-];
-
 export function FilterDrawer({
     open,
     onOpenChange,
@@ -53,8 +41,10 @@ export function FilterDrawer({
     onLocationToggle,
 }: FilterDrawerProps) {
     const [isLocLoading, setIsLocLoading] = React.useState(false);
+    const [locationError, setLocationError] = React.useState<string | null>(null);
 
     const handleLocationSwitch = async (checked: boolean) => {
+        setLocationError(null);
         if (checked) {
             setIsLocLoading(true);
             try {
@@ -66,9 +56,8 @@ export function FilterDrawer({
                     lng: position.coords.longitude,
                 };
                 onLocationToggle(true, userLocation);
-            } catch (error) {
-                console.error("Location error:", error);
-                alert('위치 권한이 필요합니다. 브라우저 설정에서 위치 권한을 허용해주세요.');
+            } catch {
+                setLocationError('위치 권한이 필요합니다. 브라우저 설정에서 위치 권한을 허용해주세요.');
                 onLocationToggle(false);
             } finally {
                 setIsLocLoading(false);
@@ -90,6 +79,7 @@ export function FilterDrawer({
         onCategoryChange('전체');
         onTagsChange([]);
         onLocationToggle(false);
+        setLocationError(null);
     };
 
     return (
@@ -108,12 +98,12 @@ export function FilterDrawer({
                         <div className="space-y-3">
                             <h3 className="text-sm font-medium leading-none text-muted-foreground">카테고리</h3>
                             <div className="flex flex-wrap gap-2">
-                                {CATEGORIES.map((category) => (
+                                {CATEGORIES.filter(c => c !== '전체').map((category) => (
                                     <Badge
                                         key={category}
                                         variant={selectedCategory === category ? "default" : "outline"}
                                         className="cursor-pointer px-4 py-2 text-sm font-normal transition-all hover:bg-primary/90 hover:text-white"
-                                        onClick={() => onCategoryChange(category)}
+                                        onClick={() => onCategoryChange(selectedCategory === category ? '전체' : category)}
                                     >
                                         {category}
                                         {selectedCategory === category && <Check className="ml-2 h-3 w-3" />}
@@ -144,6 +134,12 @@ export function FilterDrawer({
                                 <div className="flex items-center gap-2 text-xs text-primary bg-primary/10 p-2 rounded-md">
                                     <MapPin className="h-3 w-3" />
                                     <span>현재 위치를 기준으로 정렬 중입니다.</span>
+                                </div>
+                            )}
+                            {locationError && (
+                                <div className="flex items-center gap-2 text-xs text-destructive bg-destructive/10 p-2 rounded-md">
+                                    <AlertCircle className="h-3 w-3 shrink-0" />
+                                    <span>{locationError}</span>
                                 </div>
                             )}
                         </div>

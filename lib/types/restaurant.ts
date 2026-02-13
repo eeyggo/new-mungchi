@@ -1,12 +1,13 @@
-export type Category = '전체' | '한식' | '양식' | '카페' | '기타';
+export type Category = '전체' | '한식' | '양식' | '일식' | '분식' | '샌드위치' | '샐러드' | '디저트' | '빵' | '패스트푸드' | '카페' | '기타';
 
-export const CATEGORIES: Category[] = ['전체', '한식', '양식', '카페', '기타'];
+export const CATEGORIES: Category[] = ['전체', '한식', '양식', '일식', '분식', '샌드위치', '샐러드', '디저트', '빵', '패스트푸드', '카페', '기타'];
+
+const PLACEHOLDER_IMAGE = '/images/placeholder-restaurant.svg';
 
 export interface Restaurant {
   id: string;
   name: string;
   category: Category;
-  description: string;
   address: string;
   imageUrl: string;
   phone: string;
@@ -33,7 +34,6 @@ export interface DbRestaurant {
   category: string;
   hours: string | null;
   has_group_order_experience: boolean;
-  description: string | null;
   comment: string | null;
   tags: string[];
   phone: string | null;
@@ -43,16 +43,20 @@ export interface DbRestaurant {
   created_at: string;
 }
 
+function toCategory(value: string): Category {
+  const valid = CATEGORIES.filter((c): c is Category => c !== '전체');
+  return valid.includes(value as Category) ? (value as Category) : '기타';
+}
+
 export function toRestaurant(db: DbRestaurant): Restaurant {
   return {
     id: String(db.id),
     name: db.name,
-    imageUrl: db.image_url ?? '',
+    imageUrl: db.image_url || PLACEHOLDER_IMAGE,
     address: db.address,
-    category: db.category as Category,
+    category: toCategory(db.category),
     hours: db.hours ?? '',
     hasGroupOrderExperience: db.has_group_order_experience,
-    description: db.description ?? '',
     comment: db.comment ?? '',
     tags: db.tags ?? [],
     phone: db.phone ?? '',
