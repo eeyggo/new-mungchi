@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { RestaurantCard } from '@/components/restaurant-card';
 import { RestaurantListHeader } from '@/components/restaurant-list-header';
-import { FilterSheet } from '@/components/filter-sheet';
+import { FilterDrawer } from '@/components/filter-drawer';
+import { CategoryChips } from '@/components/category-chips';
 import { AdBanner } from '@/components/ad-banner';
 import { Category, Restaurant } from '@/lib/types/restaurant';
 import { calculateDistance } from '@/lib/utils/location';
@@ -29,6 +30,12 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
       setUserLocation(null);
     }
   };
+
+  // 활성 필터 개수 계산
+  const activeFilterCount =
+    (selectedCategory !== '전체' ? 1 : 0) +
+    selectedTags.length +
+    (locationEnabled ? 1 : 0);
 
   // 필터링 로직
   let filteredRestaurants = restaurants;
@@ -68,9 +75,9 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-24 md:pb-0">
-      <RestaurantListHeader onFilterClick={() => setIsFilterOpen(true)} />
+      <RestaurantListHeader />
 
-      <FilterSheet
+      <FilterDrawer
         open={isFilterOpen}
         onOpenChange={setIsFilterOpen}
         selectedCategory={selectedCategory}
@@ -82,6 +89,19 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
       />
 
       <main className="max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
+        <div className="mb-4">
+          <CategoryChips
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            selectedTags={selectedTags}
+            onTagsChange={setSelectedTags}
+            locationEnabled={locationEnabled}
+            onLocationToggle={(enabled) => handleLocationToggle(enabled)}
+            onFilterClick={() => setIsFilterOpen(true)}
+            activeFilterCount={activeFilterCount}
+          />
+        </div>
+
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-gray-800">
             {selectedCategory === '전체' ? '전체 맛집' : `${selectedCategory} 맛집`}

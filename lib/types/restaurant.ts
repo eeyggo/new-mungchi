@@ -1,5 +1,7 @@
 export type Category = '전체' | '한식' | '양식' | '카페' | '기타';
 
+export const CATEGORIES: Category[] = ['전체', '한식', '양식', '카페', '기타'];
+
 export interface Restaurant {
   id: string;
   name: string;
