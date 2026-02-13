@@ -2,8 +2,6 @@ export type Category = '전체' | '한식' | '양식' | '일식' | '분식' | '�
 
 export const CATEGORIES: Category[] = ['전체', '한식', '양식', '일식', '분식', '샌드위치', '샐러드', '디저트', '빵', '패스트푸드', '카페', '기타'];
 
-const PLACEHOLDER_IMAGE = '/images/placeholder-restaurant.svg';
-
 export interface Restaurant {
   id: string;
   name: string;
@@ -52,7 +50,7 @@ export function toRestaurant(db: DbRestaurant): Restaurant {
   return {
     id: String(db.id),
     name: db.name,
-    imageUrl: db.image_url || PLACEHOLDER_IMAGE,
+    imageUrl: db.image_url || '',
     address: db.address,
     category: toCategory(db.category),
     hours: db.hours ?? '',
