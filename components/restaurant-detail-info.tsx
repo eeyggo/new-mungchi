@@ -23,6 +23,7 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
                 <RestaurantImage
                     src={restaurant.imageUrl}
                     alt={restaurant.name}
+                    category={restaurant.category}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 896px"
