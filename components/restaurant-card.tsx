@@ -65,7 +65,7 @@ export function RestaurantCard({ restaurant, onSelectRestaurant }: RestaurantCar
                 {restaurant.hasGroupOrderExperience && (
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full border border-green-100">
                         <CheckCircle2 className="size-3.5" />
-                        <span>단체/간식 경험</span>
+                        <span>단체/간식행사 경험</span>
                     </div>
                 )}
             </div>

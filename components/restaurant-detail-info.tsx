@@ -37,9 +37,17 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
                     <ChevronLeft className="size-6" />
                 </button>
 
-                {/* Category Badge */}
-                <div className="absolute top-4 right-4 px-3 py-1.5 bg-white rounded-full text-sm font-medium shadow-md">
-                    {restaurant.category}
+                {/* Badges */}
+                <div className="absolute top-4 right-4 flex items-center gap-2">
+                    {restaurant.hasGroupOrderExperience && (
+                        <div className="px-3 py-1.5 bg-green-500 text-white rounded-full text-sm font-medium shadow-md flex items-center gap-1">
+                            <CheckCircle2 className="size-3.5" />
+                            단체주문 가능
+                        </div>
+                    )}
+                    <div className="px-3 py-1.5 bg-white rounded-full text-sm font-medium shadow-md">
+                        {restaurant.category}
+                    </div>
                 </div>
             </div>
 
@@ -47,7 +55,17 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
             <div className="p-5 md:p-8">
                 {/* Basic Info */}
                 <div className="pb-5 md:pb-6 border-b">
-                    <h1 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">{restaurant.name}</h1>
+                    <div className="flex flex-wrap items-center gap-2 mb-3 md:mb-4">
+                        <h1 className="text-xl md:text-2xl font-bold">{restaurant.name}</h1>
+                        {restaurant.tags?.map(tag => (
+                            <span
+                                key={tag}
+                                className="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-full text-xs"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
 
                     <div className="flex items-start gap-2 mb-2 md:mb-3">
                         <MapPin className="size-4 text-gray-500 flex-shrink-0 mt-0.5" />
@@ -58,10 +76,10 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
                             href={restaurant.naverPlaceUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-shrink-0 flex items-center gap-1 px-2 py-1 text-xs bg-green-50 text-green-700 rounded active:bg-green-100 hover:bg-green-100 transition-colors"
+                            className="flex-shrink-0 flex items-center gap-1 px-2 py-1 text-xs md:text-sm bg-green-50 text-green-700 rounded active:bg-green-100 hover:bg-green-100 transition-colors"
                         >
                             네이버
-                            <ExternalLink className="size-3" />
+                            <ExternalLink className="size-3 md:size-4" />
                         </a>
                     </div>
 
@@ -75,47 +93,15 @@ export function RestaurantDetailInfo({ restaurant }: RestaurantDetailInfoProps) 
                             <span className="text-gray-900">{restaurant.phone}</span>
                         </div>
                     </div>
-                </div>
 
-                {/* Additional Info */}
-                <div className="py-5 md:py-6 border-b space-y-4">
-                    {/* Group Order Experience */}
-                    <div>
-                        <div className="flex items-center gap-2 mb-2">
-                            {restaurant.hasGroupOrderExperience ? (
-                                <>
-                                    <CheckCircle2 className="size-5 text-green-600" />
-                                    <span className="text-sm md:text-base font-medium text-green-700">단체주문 경험 있음</span>
-                                </>
-                            ) : (
-                                <>
-                                    <div className="size-5 border-2 border-gray-300 rounded-full" />
-                                    <span className="text-sm md:text-base font-medium text-gray-600">단체주문 경험 확인 필요</span>
-                                </>
-                            )}
-                        </div>
-                    </div>
 
                     {/* Comment */}
                     {restaurant.comment && (
-                        <div className="bg-gray-50 rounded-lg p-3 md:p-4">
+                        <div className="mt-3 md:mt-4 bg-gray-50 rounded-lg p-3 md:p-4">
                             <p className="text-sm md:text-base text-gray-700 leading-relaxed">{restaurant.comment}</p>
                         </div>
                     )}
-                </div>
 
-                {/* Tags */}
-                <div className="py-5 md:py-6">
-                    <div className="flex flex-wrap gap-2">
-                        {restaurant.tags?.map(tag => (
-                            <span
-                                key={tag}
-                                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm"
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
                 </div>
             </div>
 
