@@ -1,9 +1,9 @@
 /*
-  Design: Retro Modernism Ad Banner
-  - Warm cream/pastel background
-  - Rounded panel with soft shadow
-  - Brand color accents
-  - Playful ticker animation
+  Design: 1970s Retro Ad Banner
+  - Bold geometric frame
+  - Ticker tape animation
+  - Checkered border accent
+  - Flat colors and thick borders
 */
 
 'use client';
@@ -91,20 +91,24 @@ export function AdBanner() {
                 }
             `}</style>
 
-            {/* Mobile Ad Banner - Retro Style */}
-            <div className="fixed bottom-0 left-0 right-0 border-t border-border md:hidden z-10 bg-card/95 backdrop-blur-md shadow-retro-lg">
+            {/* Mobile Ad Banner - 70s Retro Style */}
+            <div className="fixed bottom-0 left-0 right-0 md:hidden z-10 bg-retro-yellow border-t-4 border-[hsl(var(--border))]">
                 <div className="h-16 flex flex-col justify-center px-4">
-                    <TickerTape messages={messages} className="text-sm font-semibold text-foreground" />
-                    <p className="text-[10px] text-brand mt-0.5 text-center font-medium">광고 환영합니다 ✨</p>
+                    <TickerTape messages={messages} className="text-sm font-bold text-retro-brown" />
+                    <p className="text-[10px] text-primary mt-0.5 text-center font-bold">광고 환영합니다 ✨</p>
                 </div>
             </div>
 
-            {/* Desktop Ad Banner - Panel Style */}
+            {/* Desktop Ad Banner - Bold Frame */}
             <div className="hidden md:block max-w-7xl mx-auto px-6 lg:px-8 pb-8 mt-8">
-                <div className="panel bg-gradient-to-r from-accent/40 via-background-alt to-accent/40 border-border/50">
-                    <div className="h-20 flex flex-col justify-center">
-                        <TickerTape messages={messages} className="text-lg font-semibold text-foreground" />
-                        <p className="text-xs text-brand mt-2 text-center font-medium">광고 환영합니다 ✨</p>
+                <div className="bg-retro-yellow rounded-[var(--radius-lg)] p-6 border-thick-brown shadow-flat-lg relative overflow-hidden">
+                    {/* Decorative corner shapes */}
+                    <div className="absolute top-0 left-0 w-16 h-16 bg-primary rounded-br-full opacity-20" />
+                    <div className="absolute bottom-0 right-0 w-16 h-16 bg-retro-orange rounded-tl-full opacity-20" />
+                    
+                    <div className="h-20 flex flex-col justify-center relative z-10">
+                        <TickerTape messages={messages} className="text-xl font-bold text-retro-brown" />
+                        <p className="text-sm text-primary mt-2 text-center font-bold">광고 환영합니다 ✨</p>
                     </div>
                 </div>
             </div>

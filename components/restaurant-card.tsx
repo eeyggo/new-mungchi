@@ -1,96 +1,94 @@
 /*
-  Design: Retro Modernism Card
-  - Clean card structure with rounded corners (20-24px)
-  - Thumbnail with soft background
-  - Rating badge with primary-soft background
-  - Category chips with brand color for emphasis
-  - Hover: 2-4px lift + shadow enhancement
+  Design: 1970s Retro Catalog Card
+  - Thick brown borders, flat shadows
+  - Geometric frame with diagonal stripes accent
+  - Icon-based (not photo-based) food illustrations
+  - Bold typography, numbered badges
+  - Flat color blocks for categories
 */
 
 import { Restaurant } from "@/lib/types/restaurant";
 import { RestaurantImage } from "@/components/restaurant-image";
-import { CheckCircle2, MapPin, Star } from 'lucide-react';
-import { formatDistance } from "@/lib/utils/location";
+import { Users, MapPin, Star } from 'lucide-react';
 
 interface RestaurantCardProps {
     restaurant: Restaurant;
     onSelectRestaurant: (id: string) => void;
+    index: number; // For catalog numbering
 }
 
-export function RestaurantCard({ restaurant, onSelectRestaurant }: RestaurantCardProps) {
+export function RestaurantCard({ restaurant, onSelectRestaurant, index }: RestaurantCardProps) {
     return (
         <button
             onClick={() => onSelectRestaurant(restaurant.id)}
-            className="group block w-full bg-card rounded-[20px] overflow-hidden border border-border shadow-retro hover:shadow-retro-lg hover:-translate-y-1 transition-all duration-300"
+            className="card-retro hover-retro w-full group relative"
         >
-            {/* Thumbnail with soft cream/blue tint background */}
-            <div className="relative aspect-[4/3] w-full bg-gradient-to-br from-background-alt to-accent overflow-hidden">
-                <RestaurantImage
-                    src={restaurant.imageUrl}
-                    alt={restaurant.name}
-                    category={restaurant.category}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
+            {/* Diagonal stripe accent in corner */}
+            <div className="absolute top-0 left-0 w-16 h-16 diagonal-stripes rounded-tl-[var(--radius)]" />
+            
+            <div className="flex items-center gap-4">
+                {/* Left: Icon Circle */}
+                <div className="icon-circle shrink-0 relative">
+                    <RestaurantImage
+                        src={restaurant.imageUrl}
+                        alt={restaurant.name}
+                        category={restaurant.category}
+                        fill
+                        className="object-cover rounded-full p-4"
+                        sizes="128px"
+                    />
+                    {/* Halftone texture overlay */}
+                    <div className="absolute inset-0 halftone-dots rounded-full pointer-events-none opacity-20" />
+                </div>
 
-                {/* Distance Badge - Top Left */}
-                {restaurant.distance !== undefined && (
-                    <div className="absolute top-3 left-3 px-3 py-1.5 bg-card/95 backdrop-blur-sm text-foreground text-xs font-semibold rounded-full flex items-center gap-1.5 shadow-retro border border-border">
-                        <MapPin className="size-3 text-brand" />
-                        {formatDistance(restaurant.distance)}
+                {/* Right: Restaurant Info */}
+                <div className="flex-1 text-left min-w-0">
+                    {/* Restaurant Name - Bold 70s Typography */}
+                    <h3 className="text-xl md:text-2xl font-bold text-retro-brown mb-1 group-hover:text-primary transition-colors">
+                        {restaurant.name}
+                    </h3>
+
+                    {/* Address */}
+                    <p className="text-sm text-muted-foreground mb-3 flex items-center gap-1">
+                        <MapPin className="size-3.5 shrink-0" />
+                        <span className="truncate">{restaurant.address}</span>
+                    </p>
+
+                    {/* Category Pills & Rating */}
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                        {/* Category - Primary Blue */}
+                        <span className="pill-retro-sm bg-primary text-primary-foreground">
+                            {restaurant.category}
+                        </span>
+                        
+                        {/* Additional tags */}
+                        {restaurant.tags?.slice(0, 1).map(tag => (
+                            <span key={tag} className="pill-retro-sm bg-card text-foreground border-2 border-[hsl(var(--border))]">
+                                {tag}
+                            </span>
+                        ))}
+
+                        {/* Star Rating */}
+                        <div className="flex items-center gap-1 text-retro-yellow">
+                            {[...Array(5)].map((_, i) => (
+                                <Star key={i} className="size-4 fill-current" />
+                            ))}
+                        </div>
                     </div>
-                )}
 
-                {/* Rating Badge - Top Right (if we add rating later) */}
-                <div className="absolute top-3 right-3 px-3 py-1.5 bg-brand-soft backdrop-blur-sm text-brand text-xs font-bold rounded-full flex items-center gap-1">
-                    <Star className="size-3 fill-current" />
-                    4.5
+                    {/* Group Order Badge */}
+                    {restaurant.hasGroupOrderExperience && (
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-retro-orange text-white text-xs font-bold rounded-full">
+                            <Users className="size-3.5" />
+                            <span>단체석 완비</span>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            {/* Card Content */}
-            <div className="p-5 text-left">
-                {/* Restaurant Name & Category */}
-                <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-bold text-foreground text-lg leading-tight pr-2 group-hover:text-brand transition-colors" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        {restaurant.name}
-                    </h3>
-                </div>
-
-                {/* Address */}
-                <p className="text-sm text-muted-foreground line-clamp-1 mb-3 flex items-center gap-1.5">
-                    <MapPin className="size-3.5 shrink-0" />
-                    {restaurant.address}
-                </p>
-
-                {/* Tags/Category Chips */}
-                <div className="flex flex-wrap gap-2 mb-3">
-                    {/* Category chip - always primary color */}
-                    <span className="pill-sm bg-brand-soft text-brand border border-brand/20">
-                        {restaurant.category}
-                    </span>
-                    
-                    {/* Additional tags */}
-                    {restaurant.tags?.slice(0, 2).map(tag => (
-                        <span key={tag} className="pill-sm bg-accent text-accent-foreground border border-border">
-                            {tag}
-                        </span>
-                    ))}
-                    {restaurant.tags && restaurant.tags.length > 2 && (
-                        <span className="pill-sm bg-accent text-accent-foreground border border-border">
-                            +{restaurant.tags.length - 2}
-                        </span>
-                    )}
-                </div>
-
-                {/* Group Order Experience Badge */}
-                {restaurant.hasGroupOrderExperience && (
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-soft text-brand text-xs font-semibold rounded-full border border-brand/20">
-                        <CheckCircle2 className="size-3.5" />
-                        <span>단체/간식행사 경험</span>
-                    </div>
-                )}
+            {/* Catalog Number Badge - Bottom Right */}
+            <div className="absolute -bottom-2 -right-2 badge-number">
+                {index + 1}
             </div>
         </button>
     );

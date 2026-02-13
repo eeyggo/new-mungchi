@@ -1,63 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Pretendard:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pretendard:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
-  Design Philosophy: Retro Modernism for Mungchi
-  - Warm pastel/cream background with #4D77FF as the hero color
-  - Generous spacing, rounded corners (20-28px), panel-based sections
-  - Editorial e-commerce layout with soft shadows
-  - Key color #4D77FF dominates all CTAs, links, and active states
+  Design Philosophy: 1970s Retro Graphic Design
+  - Bold bubble typography, flat colors, geometric shapes
+  - #4D77FF as hero color with terracotta, mustard, beige palette
+  - Thick borders, checkered patterns, vintage textures
+  - Catalog-style layout with numbered elements
 */
 
 @layer base {
   :root {
-    /* Primary - Mungchi Brand Blue #4D77FF (키컬러 - 모든 CTA/링크/활성상태) */
+    /* Primary - Mungchi Brand Blue #4D77FF */
     --primary: 221 100% 65%; /* #4D77FF */
-    --primary-hover: 221 100% 60%; /* #3B63F5 */
-    --primary-soft: 221 100% 65% / 0.12; /* rgba(77,119,255,0.12) for badges/chips */
+    --primary-dark: 221 100% 55%; /* Darker blue for borders */
     --primary-foreground: 0 0% 100%;
 
-    /* Background - Warm Cream/Ivory (따뜻한 크림/아이보리) */
-    --background: 39 100% 96%; /* #FFF6E8 */
-    --background-alt: 39 71% 95%; /* #FAF1E3 */
-    --foreground: 25 20% 20%; /* Deep Brown for text */
+    /* Retro Color Palette */
+    --retro-orange: 14 85% 55%; /* Terracotta/burnt orange */
+    --retro-yellow: 45 95% 60%; /* Mustard yellow */
+    --retro-red: 8 75% 50%; /* Retro red */
+    --retro-brown: 25 35% 30%; /* Deep brown */
 
-    /* Surface - Card (화이트 또는 아주 옅은 아이보리) */
-    --card: 0 0% 100%;
-    --card-foreground: 25 20% 20%;
+    /* Background - Warm Beige/Tan */
+    --background: 39 45% 85%; /* #DCC9B0 warm tan */
+    --background-light: 39 50% 92%; /* Lighter beige */
+    --foreground: 25 35% 20%; /* Deep brown text */
 
-    /* Border - Warm Beige (따뜻한 베이지 보더) */
-    --border: 30 30% 88%; /* #E8D7C7 */
-    --input: 30 30% 88%;
+    /* Card/Surface */
+    --card: 39 40% 95%; /* Light cream for cards */
+    --card-foreground: 25 35% 20%;
 
-    /* Muted - Neutral Support */
-    --muted: 39 40% 92%;
-    --muted-foreground: 25 10% 50%;
+    /* Border - Thick and bold */
+    --border: 25 35% 30%; /* Deep brown borders */
+    --border-thick: 4px;
 
-    /* Accent - Very Subtle (보조 포인트, 키컬러와 경쟁하지 않음) */
-    --accent: 39 60% 94%;
-    --accent-foreground: 25 20% 20%;
+    /* Muted */
+    --muted: 39 30% 80%;
+    --muted-foreground: 25 20% 40%;
 
-    /* Destructive */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    /* Ring - Matches Primary */
-    --ring: 221 100% 65%;
-
-    /* Radius - Generous rounded corners */
-    --radius: 1.25rem; /* 20px */
-    --radius-lg: 1.75rem; /* 28px */
+    /* Radius - Rounded but not too soft */
+    --radius: 1.5rem; /* 24px */
+    --radius-lg: 2rem; /* 32px */
     --radius-md: 1rem; /* 16px */
     --radius-sm: 0.75rem; /* 12px */
+    --radius-full: 9999px; /* Full rounded for pills */
 
-    /* Shadows - Soft and subtle */
-    --shadow-soft: 0 2px 8px rgba(77, 119, 255, 0.08);
-    --shadow-medium: 0 4px 16px rgba(77, 119, 255, 0.12);
-    --shadow-strong: 0 8px 24px rgba(77, 119, 255, 0.16);
+    /* Shadows - Flat design, minimal shadows */
+    --shadow-flat: 4px 4px 0px hsl(var(--border));
+    --shadow-flat-lg: 6px 6px 0px hsl(var(--border));
   }
 }
 
@@ -69,27 +63,34 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    /* Subtle vintage paper texture */
+    background-image: 
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
   }
 
-  /* Typography System */
+  /* Typography System - Bold 70s Style */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fredoka', sans-serif;
     font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl;
-    line-height: 1.2;
+    @apply text-5xl md:text-7xl;
+    line-height: 1;
+    text-transform: uppercase;
   }
 
   h2 {
-    @apply text-2xl md:text-3xl;
-    line-height: 1.3;
+    @apply text-3xl md:text-5xl;
+    line-height: 1.1;
+    font-weight: 700;
   }
 
   h3 {
-    @apply text-xl md:text-2xl;
-    line-height: 1.4;
+    @apply text-2xl md:text-3xl;
+    line-height: 1.2;
+    font-weight: 700;
   }
 
   p {
@@ -98,52 +99,125 @@
 }
 
 @layer components {
-  /* Retro shadow utilities */
-  .shadow-retro {
-    box-shadow: var(--shadow-soft);
+  /* Checkered pattern border */
+  .checkered-border {
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        hsl(var(--primary)) 0px,
+        hsl(var(--primary)) 20px,
+        hsl(var(--retro-yellow)) 20px,
+        hsl(var(--retro-yellow)) 40px
+      );
+    height: 16px;
   }
 
-  .shadow-retro-md {
-    box-shadow: var(--shadow-medium);
+  /* Diagonal stripe pattern */
+  .diagonal-stripes {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0,0,0,0.05) 10px,
+      rgba(0,0,0,0.05) 20px
+    );
   }
 
-  .shadow-retro-lg {
-    box-shadow: var(--shadow-strong);
+  /* Halftone dots pattern */
+  .halftone-dots {
+    background-image: radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
+    background-size: 8px 8px;
   }
 
-  /* Primary color utilities for key elements */
-  .text-brand {
-    color: hsl(var(--primary));
+  /* Flat shadow (70s style) */
+  .shadow-flat {
+    box-shadow: var(--shadow-flat);
   }
 
-  .bg-brand {
+  .shadow-flat-lg {
+    box-shadow: var(--shadow-flat-lg);
+  }
+
+  /* Thick border utilities */
+  .border-thick {
+    border-width: var(--border-thick);
+  }
+
+  .border-thick-primary {
+    border-width: var(--border-thick);
+    border-color: hsl(var(--primary-dark));
+  }
+
+  .border-thick-brown {
+    border-width: var(--border-thick);
+    border-color: hsl(var(--border));
+  }
+
+  /* Color utilities */
+  .bg-primary {
     background-color: hsl(var(--primary));
   }
 
-  .bg-brand-soft {
-    background-color: hsla(var(--primary-soft));
+  .bg-retro-orange {
+    background-color: hsl(var(--retro-orange));
   }
 
-  .border-brand {
-    border-color: hsl(var(--primary));
+  .bg-retro-yellow {
+    background-color: hsl(var(--retro-yellow));
   }
 
-  /* Pill-shaped elements (filters, badges, tabs) */
-  .pill {
-    @apply rounded-full px-4 py-2 font-medium transition-all duration-300;
+  .bg-retro-red {
+    background-color: hsl(var(--retro-red));
   }
 
-  .pill-sm {
-    @apply rounded-full px-3 py-1.5 text-sm font-medium transition-all duration-300;
+  .text-primary {
+    color: hsl(var(--primary));
   }
 
-  /* Panel-based sections */
-  .panel {
-    @apply bg-card rounded-[var(--radius-lg)] p-6 md:p-8 shadow-retro border border-border;
+  .text-retro-brown {
+    color: hsl(var(--retro-brown));
   }
 
-  .panel-soft {
-    @apply bg-accent/50 rounded-[var(--radius-lg)] p-6 md:p-8 border border-border/50;
+  /* Pill buttons - 70s style */
+  .pill-retro {
+    @apply rounded-full px-6 py-3 font-bold transition-all duration-200;
+    @apply border-thick-brown;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pill-retro-sm {
+    @apply rounded-full px-4 py-2 text-sm font-bold transition-all duration-200;
+    @apply border-2 border-[hsl(var(--border))];
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Geometric card frame */
+  .card-retro {
+    @apply bg-card rounded-[var(--radius)] p-4 md:p-6;
+    @apply border-thick-brown shadow-flat;
+    position: relative;
+  }
+
+  /* Numbered badge (catalog style) */
+  .badge-number {
+    @apply w-8 h-8 rounded-full flex items-center justify-center;
+    @apply bg-[hsl(var(--foreground))] text-[hsl(var(--background))] text-sm font-bold;
+    @apply border-2 border-[hsl(var(--foreground))];
+  }
+
+  /* CTA panel with bold frame */
+  .cta-panel {
+    @apply bg-retro-yellow rounded-[var(--radius-lg)] p-8 md:p-12;
+    @apply border-thick-brown shadow-flat-lg;
+    position: relative;
+  }
+
+  /* Icon circle container */
+  .icon-circle {
+    @apply w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center;
+    @apply bg-primary border-thick-brown shadow-flat;
   }
 }
 
@@ -156,16 +230,23 @@
     display: none;
   }
 
-  /* Hover lift effect for cards */
-  .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-retro-md;
+  /* Bubble letter effect */
+  .bubble-text {
+    text-shadow: 
+      3px 3px 0px hsl(var(--border)),
+      -1px -1px 0px hsl(var(--border)),
+      1px -1px 0px hsl(var(--border)),
+      -1px 1px 0px hsl(var(--border)),
+      1px 1px 0px hsl(var(--border));
   }
 
-  /* Text gradient for special headings */
-  .text-gradient-brand {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(221 100% 75%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Retro hover effect */
+  .hover-retro {
+    @apply transition-all duration-200;
+  }
+  
+  .hover-retro:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px hsl(var(--border));
   }
 }

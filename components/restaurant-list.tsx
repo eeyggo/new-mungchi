@@ -81,7 +81,9 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background-alt to-accent/30 pb-24 md:pb-0">
+    <div className="min-h-screen bg-background pb-24 md:pb-0">
+      {/* Checkered border at top */}
+      <div className="checkered-border" />
       <RestaurantListHeader />
 
       <FilterDrawer
@@ -110,29 +112,29 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
           />
         </div>
 
-        {/* Section Header with brand accent */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Playfair Display, serif' }}>
-              {selectedCategory === '전체' ? '전체 맛집' : `${selectedCategory} 맛집`}
-            </h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              <span className="text-brand font-semibold">{filteredRestaurants.length}곳</span>의 식당이 있습니다
+        {/* Section Header - 70s Bold Typography */}
+        <div className="mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold text-retro-brown mb-2">
+            {selectedCategory === '전체' ? '전체 맛집' : `${selectedCategory} 맛집`}
+          </h2>
+          <div className="flex items-center gap-3">
+            <div className="h-1 w-16 bg-primary rounded-full" />
+            <p className="text-lg text-muted-foreground font-medium">
+              <span className="text-primary font-bold">{filteredRestaurants.length}곳</span>
             </p>
+            <div className="h-1 w-16 bg-retro-orange rounded-full" />
           </div>
-          {/* Brand accent line */}
-          <div className="hidden md:block h-0.5 flex-1 max-w-[200px] ml-8 bg-gradient-to-r from-brand/40 to-transparent rounded-full" />
         </div>
 
-        {/* Restaurant Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Restaurant List - Vertical Stack */}
+        <div className="space-y-6">
           {filteredRestaurants.length === 0 ? (
-            <div className="col-span-full py-24 text-center flex flex-col items-center justify-center">
-              <div className="panel-soft max-w-md mx-auto">
+            <div className="py-24 text-center flex flex-col items-center justify-center">
+              <div className="card-retro max-w-md mx-auto">
                 <div className="bg-accent/50 p-6 rounded-full mb-6 inline-block">
                   <p className="text-5xl">🤔</p>
                 </div>
-                <p className="text-foreground text-xl font-semibold mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                <p className="text-foreground text-2xl font-bold mb-2">
                   조건에 맞는 식당이 없습니다
                 </p>
                 <p className="text-muted-foreground text-sm mb-6">
@@ -144,18 +146,19 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
                     setSelectedTags([]);
                     setLocationEnabled(false);
                   }}
-                  className="pill bg-brand text-primary-foreground hover:shadow-retro-md transition-all"
+                  className="pill-retro bg-primary text-primary-foreground hover-retro"
                 >
                   필터 초기화
                 </button>
               </div>
             </div>
           ) : (
-            filteredRestaurants.map(restaurant => (
+            filteredRestaurants.map((restaurant, index) => (
               <RestaurantCard
                 key={restaurant.id}
                 restaurant={restaurant}
                 onSelectRestaurant={handleSelectRestaurant}
+                index={index}
               />
             ))
           )}
@@ -164,16 +167,20 @@ export function RestaurantList({ restaurants }: RestaurantListProps) {
         {/* Promotional Panel (Partner CTA) */}
         {filteredRestaurants.length > 0 && (
           <div className="mt-16">
-            <div className="panel bg-gradient-to-br from-brand/10 via-accent/30 to-background-alt border-brand/20">
-              <div className="max-w-2xl mx-auto text-center">
-                <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+            <div className="cta-panel relative overflow-hidden">
+              {/* Decorative geometric shapes */}
+              <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-primary opacity-30" />
+              <div className="absolute bottom-4 right-4 w-16 h-16 bg-retro-orange opacity-20 rotate-45" />
+              <div className="absolute top-1/2 right-8 w-8 h-8 rounded-full bg-retro-red opacity-20" />
+              
+              <div className="max-w-2xl mx-auto text-center relative z-10">
+                <h3 className="text-3xl md:text-5xl font-bold text-retro-brown mb-4">
                   식당을 운영하고 계신가요?
                 </h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  뭉치에 등록하고 더 많은 단체 고객을 만나보세요. 
-                  간편한 등록 절차로 빠르게 시작할 수 있습니다.
+                <p className="text-foreground mb-8 leading-relaxed text-lg font-medium">
+                  뭉치에 등록하고 더 많은 단체 고객을 만나보세요!
                 </p>
-                <button className="pill bg-brand text-primary-foreground shadow-retro-md hover:shadow-retro-lg hover:scale-105 transition-all text-base px-8 py-3">
+                <button className="pill-retro bg-primary text-primary-foreground hover-retro text-lg px-10 py-4">
                   파트너 등록하기
                 </button>
               </div>

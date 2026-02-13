@@ -1,9 +1,9 @@
 /*
-  Design: Retro Modernism Filter Pills
-  - Pill-shaped buttons with generous padding
-  - Selected state uses brand color (#4D77FF)
-  - Unselected uses ghost style with warm borders
-  - Active filter count badge in brand color
+  Design: 1970s Retro Filter Pills
+  - Bold pill buttons with numbered badges
+  - Selected state uses primary blue
+  - Thick borders, flat shadows
+  - Catalog-style numbering
 */
 
 "use client"
@@ -41,12 +41,12 @@ export function CategoryChips({
             {/* Filter Button */}
             <button
                 onClick={onFilterClick}
-                className="shrink-0 pill bg-card text-foreground border border-border hover:border-brand hover:text-brand hover:shadow-retro transition-all"
+                className="shrink-0 pill-retro-sm bg-card text-foreground border-2 border-[hsl(var(--border))] hover-retro relative"
             >
                 <SlidersHorizontal className="h-4 w-4 inline-block mr-1.5" />
                 필터
                 {activeFilterCount > 0 && (
-                    <span className="ml-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">
+                    <span className="ml-1.5 badge-number text-[10px] w-6 h-6">
                         {activeFilterCount}
                     </span>
                 )}
@@ -56,7 +56,7 @@ export function CategoryChips({
             {selectedCategory !== '전체' && (
                 <button
                     onClick={() => onCategoryChange('전체')}
-                    className="shrink-0 pill bg-brand text-primary-foreground border border-brand shadow-retro hover:shadow-retro-md transition-all"
+                    className="shrink-0 pill-retro-sm bg-primary text-primary-foreground hover-retro"
                 >
                     {selectedCategory}
                     <X className="h-3.5 w-3.5 ml-1.5" />
@@ -67,7 +67,7 @@ export function CategoryChips({
             {locationEnabled && (
                 <button
                     onClick={() => onLocationToggle(false)}
-                    className="shrink-0 pill bg-brand text-primary-foreground border border-brand shadow-retro hover:shadow-retro-md transition-all"
+                    className="shrink-0 pill-retro-sm bg-primary text-primary-foreground hover-retro"
                 >
                     가까운순
                     <X className="h-3.5 w-3.5 ml-1.5" />
@@ -79,7 +79,7 @@ export function CategoryChips({
                 <button
                     key={tag}
                     onClick={() => removeTag(tag)}
-                    className="shrink-0 pill bg-brand text-primary-foreground border border-brand shadow-retro hover:shadow-retro-md transition-all"
+                    className="shrink-0 pill-retro-sm bg-primary text-primary-foreground hover-retro"
                 >
                     {tag}
                     <X className="h-3.5 w-3.5 ml-1.5" />
